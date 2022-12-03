@@ -31,6 +31,33 @@ function user()
     }
     $conn->close();
 }
+function verifica($user, $produto)
+{
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "monitoria";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT id_user, id_produto FROM compras WHERE id_user='$user' and id_produto='$produto' ";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while ($row = $result->fetch_assoc()) {
+            return true;
+        }
+    } else {
+        return false;
+    }
+    $conn->close();
+}
 
 function produto()
 {
@@ -68,27 +95,34 @@ function produto()
 if (isset($_POST['submit'])) {
     $usuario = $_POST['usuario'];
     $produto = $_POST['produto'];
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "monitoria";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if(verifica($usuario, $produto) == true){
+        echo "<script>alert('compra já existe!')</script>";
+    }else{
+        $usuario = $_POST['usuario'];
+        $produto = $_POST['produto'];
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "monitoria";
+    
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        $sql = "INSERT INTO compras (id_user, id_produto) VALUES ('$usuario', '$produto')";
+    
+        if ($conn->query($sql) === TRUE) {
+            echo "<script>alert('compra feita com sucesso!!')</script>";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    
+        $conn->close();
     }
 
-    $sql = "INSERT INTO compras (id_user, id_produto) VALUES ('$usuario', '$produto')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('compra feita com sucesso!!')</script>";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
 }
 ?>
 <!DOCTYPE html>

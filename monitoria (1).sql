@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 18-Nov-2022 às 12:46
+-- Tempo de geração: 03-Dez-2022 às 15:02
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.6
 
@@ -39,9 +39,10 @@ CREATE TABLE `compras` (
 
 INSERT INTO `compras` (`id_compra`, `id_user`, `id_produto`) VALUES
 (9, 1, 2),
-(10, 1, 2),
 (11, 2, 3),
-(12, 2, 3);
+(13, 1, 1),
+(14, 1, 3),
+(15, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -115,7 +116,7 @@ ALTER TABLE `produto`
 -- AUTO_INCREMENT de tabela `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `login`
